@@ -47,9 +47,16 @@ public class GameSetup extends Application {
     //Image mapImage = loadImage(MAP_IMAGE_URL);
 
 
+    ArrayList<User> players = new ArrayList<>();
+    ListView<String> listView1;
+    ObservableList<String> items1 = FXCollections.observableArrayList();
 
-    ListView<String> listView;
-    ObservableList<String> items = FXCollections.observableArrayList();
+
+
+    ListView<String> listView2;
+    ObservableList<String> items2 = FXCollections.observableArrayList();
+
+
 
     Scanner reader = new Scanner(System.in);
 
@@ -84,7 +91,7 @@ public class GameSetup extends Application {
 
 
     //trip global things
-    //ArrayList<City> trip = new ArrayList<>();
+
     //ArrayList<City> tripList = new ArrayList<>();
     ObservableList<String> trip1 = FXCollections.observableArrayList();
     ListView<String> tripView;
@@ -117,7 +124,6 @@ public class GameSetup extends Application {
 
 
 
-
     // WE'LL GET THIS FROM THE start METHOD
     Stage window;
 
@@ -125,57 +131,8 @@ public class GameSetup extends Application {
 
     @Override
     public void start(Stage initWindow) {
-
-
-
-        //topImageView.setImage(mapImage);
-        topImageView.setFitHeight(269.6);
-        topImageView.setFitWidth(512);
-        topImageView.setPreserveRatio(true);
-
-        stack.setAlignment(Pos.TOP_LEFT);
-
-        // THEN PUT EVERYTHING INSIDE THE appPane, WHICH IS ALREADY IN THE SCENE
-        player1info.getChildren().addAll(label1);
-        leftPane.getChildren().addAll(newGame, player1info, txtP1, guessP1);
-
-
-        player2info.getChildren().addAll(label2);
-        rightPane.getChildren().addAll(player2info, txtP2, guessP2);
-
-
-
-
-
-
-
-
-        appPane.setCenter(stack);
-
-        appPane.setRight(rightPane);
-        appPane.setLeft(leftPane);
-        appPane.setTop(filePane);
-
-        appPane.setBottom(bot);
-        window = initWindow;
-        window.setWidth(1024);
-        window.setHeight(768);
-        window.setScene(windowScene);
-        window.show();
-
-//        topImageView.setOnMouseClicked(e -> {
-//            System.out.println("["+e.getX()+", "+e.getY()+"]");
-//
-//
-//            // PUT THE SCDENE IN THE WINDOW AND OPEN THE WINDOW UP
-//            window = initWindow;
-//            window.setWidth(1024);
-//            window.setHeight(768);
-//            window.setScene(windowScene);
-//            window.show();
-//
-//        }
-
+        listView1 = new ListView<>();
+        listView2 = new ListView<>();
 
         newGame.setOnAction(event -> {
             Stage alertWindow = new Stage();
@@ -209,20 +166,74 @@ public class GameSetup extends Application {
             Scene scene = new Scene(layout);
             alertWindow.setScene(scene);
             alertWindow.showAndWait();
+//            items1.add(Integer.toString(players.get(0).getNumber()));
+//            items2.add(Integer.toString(players.get(1).getNumber()));
+
+
+
+        });
+//        items1.add(Integer.toString(players.get(0).getNumber()));
+//        items2.add(Integer.toString(players.get(1).getNumber()));
+//        listView1.setItems(items1);
+//        listView2.setItems(items2);
+        guessP1.setOnAction(event -> {
+
+        });
+
+        guessP2.setOnAction(event -> {
+
         });
 
 
+        //topImageView.setImage(mapImage);
+        topImageView.setFitHeight(269.6);
+        topImageView.setFitWidth(512);
+        topImageView.setPreserveRatio(true);
+
+
+        stack.setAlignment(Pos.TOP_LEFT);
+
+        // THEN PUT EVERYTHING INSIDE THE appPane, WHICH IS ALREADY IN THE SCENE
+        player1info.getChildren().addAll(label1);
+        leftPane.getChildren().addAll(newGame, player1info, txtP1, guessP1);
+
+
+
+        player2info.getChildren().addAll(label2);
+        rightPane.getChildren().addAll(player2info, txtP2, guessP2);
+
+
+        leftPane.getChildren().add(listView1);
+        rightPane.getChildren().add(listView2);
+
+
+
+
+
+        appPane.setCenter(stack);
+
+        appPane.setRight(rightPane);
+        appPane.setLeft(leftPane);
+        appPane.setTop(filePane);
+
+        appPane.setBottom(bot);
+        window = initWindow;
+        window.setWidth(1024);
+        window.setHeight(768);
+        window.setScene(windowScene);
+        window.show();
 
     }
 
     public void initUsers(int a, int b){
         User player1 = new User();
-
         User player2 = new User();
-
 
         player1.setNumber(a);
         player2.setNumber(b);
+
+        players.add(player1);
+        players.add(player2);
     }
 
 
