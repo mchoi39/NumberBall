@@ -186,7 +186,12 @@ public class GameSetup extends Application {
                     player1guess.incrStrike();
                     continue;
                 }
-                
+
+            }
+            items1.add(txtP1.getText());
+            listView1.setItems(items1);
+            for (int g = 3; g >= 0; g--){
+
             }
 
         });
