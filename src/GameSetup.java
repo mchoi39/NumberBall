@@ -93,11 +93,7 @@ public class GameSetup extends Application {
     //trip global things
 
     //ArrayList<City> tripList = new ArrayList<>();
-    ObservableList<String> trip1 = FXCollections.observableArrayList();
-    ListView<String> tripView;
-    String tripName;
-    HBox tripPlusMinusHBox = new HBox();
-    double totalDist;
+
 
     //Label displayDist = new Label("Total Distance: " + totalDist);
 
@@ -177,6 +173,21 @@ public class GameSetup extends Application {
 //        listView1.setItems(items1);
 //        listView2.setItems(items2);
         guessP1.setOnAction(event -> {
+            char[] master = String.valueOf(players.get(1).getNumber()).toCharArray();
+            Guess player1guess = new Guess(Integer.parseInt(txtP1.getText()));
+            String num = String.valueOf(player1guess.getTheGuess());
+            char[] digits = num.toCharArray();
+            int[] strikeIndex = new int[4];
+            int counter = 0;
+            for (int i = 0; i < master.length; i++){
+                if (digits[i] == master[i]){
+                    strikeIndex[counter] = i;
+                    counter++;
+                    player1guess.incrStrike();
+                    continue;
+                }
+                
+            }
 
         });
 
