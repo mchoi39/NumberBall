@@ -1,4 +1,5 @@
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
@@ -141,13 +142,30 @@ public class GameSetup extends Application {
             TextField nameGetter2 = new TextField();
 
             okies.setOnAction(eventz -> {
-                player1 = Integer.parseInt(nameGetter1.getText());
-                player2 = Integer.parseInt(nameGetter2.getText());
+                try{
+                    player1 = Integer.parseInt(nameGetter1.getText());
+                    player2 = Integer.parseInt(nameGetter2.getText());
+                    int lengthP1 = String.valueOf(player1).length();
+                    int lengthP2 = String.valueOf(player2).length();
 
+                    if (lengthP1 != 4 || lengthP2 != 4){
+                        throw new IllegalArgumentException();
+                    } 
+                    initUsers(player1, player2);
 
-                initUsers(player1, player2);
-
-                alertWindow.close();
+                    alertWindow.close();
+                } catch (IllegalArgumentException g){
+                    System.out.println("Invalid Number try again");
+                }
+//                player1 = Integer.parseInt(nameGetter1.getText());
+//                player2 = Integer.parseInt(nameGetter2.getText());
+//                int lengthP1 = String.valueOf(player1).length();
+//                int lengthP2 = String.valueOf(player2).length();
+//
+//
+//                initUsers(player1, player2);
+//
+//                alertWindow.close();
 
             });
 
@@ -173,31 +191,79 @@ public class GameSetup extends Application {
 //        listView1.setItems(items1);
 //        listView2.setItems(items2);
         guessP1.setOnAction(event -> {
-            char[] master = String.valueOf(players.get(1).getNumber()).toCharArray();
-            Guess player1guess = new Guess(Integer.parseInt(txtP1.getText()));
-            String num = String.valueOf(player1guess.getTheGuess());
-            char[] digits = num.toCharArray();
-            int[] strikeIndex = new int[4];
-            int counter = 0;
-            for (int i = 0; i < master.length; i++){
-                if (digits[i] == master[i]){
-                    strikeIndex[counter] = i;
-                    counter++;
-                    player1guess.incrStrike();
-                    continue;
+            try {
+                int length = String.valueOf(txtP1).length();
+                if (length != 4) {
+                    throw new IllegalArgumentException();
                 }
+                char[] master = String.valueOf(players.get(1).getNumber()).toCharArray();
+                Guess player1guess = new Guess(Integer.parseInt(txtP1.getText()));
+                String num = String.valueOf(player1guess.getTheGuess());
+                char[] digits = num.toCharArray();
+                int strkCounter = 0;
+                for (int i = 0; i < master.length; i++) {
+                    if (digits[i] == master[i]) {
+                        //strikeIndex[strikCounter] = i;
+                        strkCounter++;
+                        player1guess.incrStrike();
+                        continue;
+                    }
 
+                }
+                items1.add(txtP1.getText());
+                listView1.setItems(items1);
+
+                int ballCounter = 0;
+                for (int g = 0; g < master.length; g++) {
+                    for (int h = 0; h < master.length; h++) {
+                        if (digits[g] == master[h]) {
+                            ballCounter++;
+                        }
+                    }
+                }
+                ballCounter -= strkCounter;
+                System.out.println("ball is " + ballCounter);
+            } catch (IllegalArgumentException e){
+                System.out.println("Invalid input");
             }
-            items1.add(txtP1.getText());
-            listView1.setItems(items1);
-            for (int g = 3; g >= 0; g--){
-
-            }
-
         });
 
         guessP2.setOnAction(event -> {
+            try {
+                int length = String.valueOf(txtP2).length();
+                if (length != 4) {
+                    throw new IllegalArgumentException();
+                }
+                char[] master = String.valueOf(players.get(0).getNumber()).toCharArray();
+                Guess player1guess = new Guess(Integer.parseInt(txtP2.getText()));
+                String num = String.valueOf(player1guess.getTheGuess());
+                char[] digits = num.toCharArray();
+                int strkCounter = 0;
+                for (int i = 0; i < master.length; i++) {
+                    if (digits[i] == master[i]) {
+                        //strikeIndex[strikCounter] = i;
+                        strkCounter++;
+                        player1guess.incrStrike();
+                        continue;
+                    }
 
+                }
+                items1.add(txtP1.getText());
+                listView1.setItems(items1);
+
+                int ballCounter = 0;
+                for (int g = 0; g < master.length; g++) {
+                    for (int h = 0; h < master.length; h++) {
+                        if (digits[g] == master[h]) {
+                            ballCounter++;
+                        }
+                    }
+                }
+                ballCounter -= strkCounter;
+                System.out.println("ball is " + ballCounter);
+            } catch (IllegalArgumentException e){
+                System.out.println("Invalid input");
+            }
         });
 
 
